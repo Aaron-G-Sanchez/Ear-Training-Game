@@ -1,23 +1,32 @@
 const audioContext = new (window.AudioContext || window.webkitAudioContext)()
 
 // Game variables
+
+let score = 0
+
 const frequencies = [250, 440, 500, 1000, 2000]
 let randomNumber = Math.floor(Math.random() * frequencies.length)
-
-console.log(randomNumber)
 
 const button = document.querySelectorAll('button')
 
 const question = document.querySelector('h1')
 
-const answer = frequencies[randomNumber]
+let answer = frequencies[randomNumber]
 console.log(answer)
 
-// Oscillator
+// Oscillator and gain node
 let osc = audioContext.createOscillator()
+let gain = audioContext.createGain()
 
-osc.connect(audioContext.destination)
+osc.connect(gain)
+gain.connect(audioContext.destination)
+osc.start()
+gain.gain.value = 0
 
+// Sets frequency based off a random index from the frequency array
+let freq = osc.frequency.setValueAtTime(answer, audioContext.currentTime)
+
+// Play/Pause/Volume buttons -- Currently WORKS but only lets you start and stop ONCE
 // Sets OSC to start and stop after duration
 // osc.start()
 
@@ -25,20 +34,18 @@ osc.connect(audioContext.destination)
 //   osc.stop()
 // }, 2000)
 
-// Play/Pause buttons -- Currently WORKS but only lets you start and stop ONCE
 const play = document.querySelector('#play')
-const pause = document.querySelector('#pause')
+const mute = document.querySelector('#pause')
 
 play.addEventListener('click', () => {
-  console.log('Play')
-  osc.start()
+  gain.gain.value = 0.03
 })
 
-pause.addEventListener('click', () => {
-  console.log('Pause')
-  osc.stop()
+mute.addEventListener('click', () => {
+  gain.gain.value = 0
 })
 
+// Game play functions
 // Displays the frequencys from the array of frequencies on the buttons
 for (let i = 0; i < button.length; i++) {
   button[i].innerHTML = `${frequencies[i]}Hz`
