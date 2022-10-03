@@ -1,6 +1,4 @@
-const AudioContext = window.AudioContext || window.webkitAudioContext
-
-const audioContext = new AudioContext()
+const audioContext = new (window.AudioContext || window.webkitAudioContext)()
 
 // Game variables
 
@@ -12,16 +10,31 @@ const question = document.querySelector('h1')
 
 const answer = '1000Hz'
 
-// play pause buttons
+// Oscillator
+let osc = audioContext.createOscillator()
+
+osc.connect(audioContext.destination)
+
+// Sets OSC to start and stop after duration
+// osc.start()
+
+// setTimeout(() => {
+//   osc.stop()
+// }, 2000)
+
+// play pause buttons -- Currently WORKS but only lets you start and stop ONCE
+
 const play = document.querySelector('#play')
 const pause = document.querySelector('#pause')
 
 play.addEventListener('click', () => {
   console.log('Play')
+  osc.start()
 })
 
 pause.addEventListener('click', () => {
   console.log('Pause')
+  osc.stop()
 })
 
 // Displays the frequencys from the array of frequencies on the buttons
