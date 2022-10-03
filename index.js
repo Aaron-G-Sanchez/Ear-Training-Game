@@ -17,8 +17,10 @@ const answer = 1000
 
 // Displays the frequencys from the array of frequencies on the buttons
 for (let i = 0; i < button.length; i++) {
-  button[i].addEventListener('click', () => {
-    console.log('clicked')
-  })
   button[i].innerHTML = `${frequencies[i]} Hz`
 }
+
+for (let i = 0; i < button.length; i++)
+  button[i].addEventListener('click', () => {
+    console.log(button[i].innerHTML)
+  })
