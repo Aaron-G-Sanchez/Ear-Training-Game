@@ -1,14 +1,17 @@
 const audioContext = new (window.AudioContext || window.webkitAudioContext)()
 
 // Game variables
-
 const frequencies = [250, 440, 500, 1000, 2000]
+let randomNumber = Math.floor(Math.random() * frequencies.length)
+
+console.log(randomNumber)
 
 const button = document.querySelectorAll('button')
 
 const question = document.querySelector('h1')
 
-const answer = '1000Hz'
+const answer = frequencies[randomNumber]
+console.log(answer)
 
 // Oscillator
 let osc = audioContext.createOscillator()
@@ -22,8 +25,7 @@ osc.connect(audioContext.destination)
 //   osc.stop()
 // }, 2000)
 
-// play pause buttons -- Currently WORKS but only lets you start and stop ONCE
-
+// Play/Pause buttons -- Currently WORKS but only lets you start and stop ONCE
 const play = document.querySelector('#play')
 const pause = document.querySelector('#pause')
 
@@ -45,7 +47,7 @@ for (let i = 0; i < button.length; i++) {
 // Loops through the buttons and looks at the innerHTML
 for (let i = 0; i < button.length; i++)
   button[i].addEventListener('click', () => {
-    if (button[i].innerHTML == answer) {
+    if (button[i].innerHTML == `${answer}Hz`) {
       console.log('YOU ARE CORRECT')
     } else {
       console.log(button[i].innerHTML)
