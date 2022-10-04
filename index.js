@@ -64,25 +64,41 @@ mute.addEventListener('click', () => {
 // Updates the answer as well as the OSC frequncy when answer is correctly guessed
 let updateAnswer = () => {
   numGenerator()
+  potentialScore = 100
   answer = frequencies[numGenerator()]
-  console.log(answer) //logs new answer
+  console.log(`NEW ANSWER:${answer}`) //logs new answer
 
   oscFreq.setValueAtTime(answer, audioContext.currentTime)
 }
 
 // Levels up game
-let levelUp = () => {
-  if (turnCounter === 5) {
-    level.innerHTML = 'LEVEL 2'
-    frequencies.push(4000)
-    const freqPush = document.createElement('button')
-    section.appendChild(freqPush)
-    buttons = document.querySelectorAll('button')
+// creates one div and add one freq to the array
+let levelTwo = () => {
+  potentialScore = 100
+  level.innerHTML = 'LEVEL 2'
+  frequencies.push(4000)
+  const freqPush = document.createElement('button')
+  section.appendChild(freqPush)
+  buttons = document.querySelectorAll('button')
 
-    buttonClicks()
-  }
+  buttonClicks()
 }
 
+// Creates two divs and adds two freqs to the array
+let levelThree = () => {
+  level.innerHTML = 'LEVEL 3'
+  frequencies.push(6000)
+  frequencies.unshift(100)
+  const freqPushTwo = document.createElement('button')
+  const freqUnshift = document.createElement('button')
+  section.appendChild(freqPushTwo)
+  section.prepend(freqUnshift)
+  buttons = document.querySelectorAll('button')
+
+  buttonClicks()
+}
+
+// Logic for the button clicks
 let buttonClicks = () => {
   for (let i = 0; i < buttons.length; i++) {
     buttons[i].innerHTML = `${frequencies[i]}Hz`
@@ -94,23 +110,27 @@ let buttonClicks = () => {
     buttons[i].addEventListener('click', () => {
       if (buttons[i].innerHTML == `${answer}Hz`) {
         console.log('YOU ARE CORRECT')
+        // score += potentialScore
+        turnCounter++
         updateAnswer()
 
         // Changes score and mutes the OSC
-        score += potentialScore
-        turnCounter++
         // gain.gain.value = 0
-        scoreBoard.innerHTML = score
+        scoreBoard.innerHTML = turnCounter
         if (turnCounter === 5) {
-          levelUp()
+          levelOne()
+        } else if (turnCounter === 12) {
+          levelThree()
         }
       } else {
         // Decrements potential score every guess
-        potentialScore -= 10
-        scoreBoard.innerHTML = score
-        if (potentialScore <= 50) {
-          updateAnswer()
-        }
+        console.log('Try Again')
+        // potentialScore -= 10
+        // console.log(potentialScore)
+        // scoreBoard.innerHTML = score
+        // if (potentialScore <= 50) {
+        //   updateAnswer()
+        // }
       }
     })
 }
