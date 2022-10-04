@@ -3,10 +3,11 @@ const audioContext = new (window.AudioContext || window.webkitAudioContext)()
 // Game variables
 
 let score = 0
+let turnCounter = 0
 
 let potentialScore = 100
 
-const frequencies = [250, 440, 500, 1000, 2000]
+let frequencies = [250, 440, 500, 1000, 2000]
 
 let numGenerator = () => {
   let randomNumber = Math.floor(Math.random() * frequencies.length)
@@ -54,11 +55,13 @@ mute.addEventListener('click', () => {
 })
 
 // Game play functions
-// When an answer is correct, this function is called and updates the answer as well as the OSC frequncy
+
+// Updates the answer as well as the OSC frequncy when answer is correctly guessed
 let updateAnswer = () => {
+  console.log(answer) //logs old answer
   numGenerator()
   answer = frequencies[numGenerator()]
-  console.log(answer)
+  console.log(answer) //logs new answer
 
   oscFreq.setValueAtTime(answer, audioContext.currentTime)
 }
@@ -69,6 +72,10 @@ let playGame = () => {
     button[i].innerHTML = `${frequencies[i]}Hz`
   }
 
+  let levelUp = () => {
+    frequencies.push(4000)
+  }
+
   // Loops through the buttons and looks at the innerHTML
   for (let i = 0; i < button.length; i++)
     button[i].addEventListener('click', () => {
@@ -76,16 +83,26 @@ let playGame = () => {
         console.log('YOU ARE CORRECT')
         updateAnswer()
 
-        // Changes score and mutes the OSC AND changes the frequency of the osc
+        // Changes score and mutes the OSC
         score += potentialScore
+        turnCounter++
         // gain.gain.value = 0
         question.innerHTML = score
+        if (turnCounter === 5) {
+          levelUp()
+          console.log(frequencies)
+        }
       } else {
         console.log(button[i].innerHTML)
 
         // Decrements potential score every guess
         potentialScore -= 10
+        turnCounter++
         question.innerHTML = score
+        if (turnCounter === 5) {
+          levelUp()
+          console.log(frequencies)
+        }
       }
     })
 }
