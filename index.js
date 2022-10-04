@@ -4,6 +4,8 @@ const audioContext = new (window.AudioContext || window.webkitAudioContext)()
 
 let score = 0
 
+let potentialScore = 100
+
 const frequencies = [250, 440, 500, 1000, 2000]
 let randomNumber = Math.floor(Math.random() * frequencies.length)
 
@@ -24,7 +26,8 @@ osc.start()
 gain.gain.value = 0
 
 // Sets frequency based off a random index from the frequency array
-let freq = osc.frequency.setValueAtTime(answer, audioContext.currentTime)
+let oscFreq = osc.frequency
+oscFreq.setValueAtTime(answer, audioContext.currentTime)
 
 // Play/Pause/Volume buttons -- Currently WORKS but only lets you start and stop ONCE
 // Sets OSC to start and stop after duration
@@ -56,7 +59,11 @@ for (let i = 0; i < button.length; i++)
   button[i].addEventListener('click', () => {
     if (button[i].innerHTML == `${answer}Hz`) {
       console.log('YOU ARE CORRECT')
+      score += potentialScore
+      console.log(score)
     } else {
       console.log(button[i].innerHTML)
+      potentialScore -= 10
+      console.log(potentialScore)
     }
   })
