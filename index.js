@@ -20,7 +20,13 @@ console.log(answer)
 
 const button = document.querySelectorAll('button')
 
-const question = document.querySelector('h1')
+const scoreBoard = document.querySelector('h1')
+
+const section = document.querySelector('section')
+
+const level = document.querySelector('h2')
+
+level.innerHTML = 'LEVEL 1'
 
 // Oscillator and gain node
 let osc = audioContext.createOscillator()
@@ -55,10 +61,8 @@ mute.addEventListener('click', () => {
 })
 
 // Game play functions
-
 // Updates the answer as well as the OSC frequncy when answer is correctly guessed
 let updateAnswer = () => {
-  console.log(answer) //logs old answer
   numGenerator()
   answer = frequencies[numGenerator()]
   console.log(answer) //logs new answer
@@ -66,14 +70,37 @@ let updateAnswer = () => {
   oscFreq.setValueAtTime(answer, audioContext.currentTime)
 }
 
-let playGame = () => {
-  // Displays the frequencys from the array of frequencies on the buttons
+// Levels up game
+let levelUp = () => {
+  if (turnCounter === 5) {
+    level.innerHTML = 'LEVEL 2'
+    frequencies.push(4000)
+    const freqPush = document.createElement('button')
+    section.appendChild(freqPush)
+    let levelTwo = document.querySelectorAll('button')[5]
+    levelTwo.innerHTML = `${frequencies[5]}Hz`
+    levelTwo.addEventListener('click', () => {
+      if (levelTwo.innerHTML == `${answer}Hz`) {
+        console.log('YOU ARE CORRECT')
+        updateAnswer()
+
+        // Changes score and mutes the OSC
+        score += potentialScore
+        turnCounter++
+        // gain.gain.value = 0
+        scoreBoard.innerHTML = score
+        // if (turnCounter === 5) {
+        //   levelUp()
+        //   console.log(frequencies)
+        // }
+      }
+    })
+  }
+}
+
+let buttonClicks = () => {
   for (let i = 0; i < button.length; i++) {
     button[i].innerHTML = `${frequencies[i]}Hz`
-  }
-
-  let levelUp = () => {
-    frequencies.push(4000)
   }
 
   // Loops through the buttons and looks at the innerHTML
@@ -87,7 +114,7 @@ let playGame = () => {
         score += potentialScore
         turnCounter++
         // gain.gain.value = 0
-        question.innerHTML = score
+        scoreBoard.innerHTML = score
         if (turnCounter === 5) {
           levelUp()
           console.log(frequencies)
@@ -97,14 +124,50 @@ let playGame = () => {
 
         // Decrements potential score every guess
         potentialScore -= 10
-        turnCounter++
-        question.innerHTML = score
-        if (turnCounter === 5) {
-          levelUp()
+        scoreBoard.innerHTML = score
+        if (potentialScore <= 50) {
+          updateAnswer()
           console.log(frequencies)
         }
       }
     })
+}
+let playGame = () => {
+  // Displays the frequencys from the array of frequencies on the buttons
+  // for (let i = 0; i < button.length; i++) {
+  //   button[i].innerHTML = `${frequencies[i]}Hz`
+  // }
+
+  // // Loops through the buttons and looks at the innerHTML
+  // for (let i = 0; i < button.length; i++)
+  //   button[i].addEventListener('click', () => {
+  //     if (button[i].innerHTML == `${answer}Hz`) {
+  //       console.log('YOU ARE CORRECT')
+  //       updateAnswer()
+
+  //       // Changes score and mutes the OSC
+  //       score += potentialScore
+  //       turnCounter++
+  //       // gain.gain.value = 0
+  //       question.innerHTML = score
+  //       if (turnCounter === 5) {
+  //         levelUp()
+  //         console.log(frequencies)
+  //       }
+  //     } else {
+  //       console.log(button[i].innerHTML)
+
+  //       // Decrements potential score every guess
+  //       potentialScore -= 10
+  //       turnCounter++
+  //       question.innerHTML = score
+  //       if (turnCounter === 5) {
+  //         levelUp()
+  //         console.log(frequencies)
+  //       }
+  //     }
+  //   })
+  buttonClicks()
 }
 
 playGame()
