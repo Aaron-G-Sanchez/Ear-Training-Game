@@ -54,6 +54,14 @@ mute.addEventListener('click', () => {
 })
 
 // Game play functions
+// When an answer is correct, this function is called and updates the answer as well as the OSC frequncy
+let updateAnswer = () => {
+  numGenerator()
+  answer = frequencies[numGenerator()]
+  console.log(answer)
+
+  oscFreq.setValueAtTime(answer, audioContext.currentTime)
+}
 
 let playGame = () => {
   // Displays the frequencys from the array of frequencies on the buttons
@@ -66,15 +74,11 @@ let playGame = () => {
     button[i].addEventListener('click', () => {
       if (button[i].innerHTML == `${answer}Hz`) {
         console.log('YOU ARE CORRECT')
-        numGenerator()
+        updateAnswer()
 
-        let answer = frequencies[numGenerator()]
-
-        console.log(answer) // New array number is picked
-
-        // Changes score and mutes the OSC
+        // Changes score and mutes the OSC AND changes the frequency of the osc
         score += potentialScore
-        gain.gain.value = 0
+        // gain.gain.value = 0
         question.innerHTML = score
       } else {
         console.log(button[i].innerHTML)
