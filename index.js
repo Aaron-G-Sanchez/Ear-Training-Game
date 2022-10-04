@@ -7,14 +7,19 @@ let score = 0
 let potentialScore = 100
 
 const frequencies = [250, 440, 500, 1000, 2000]
-let randomNumber = Math.floor(Math.random() * frequencies.length)
+
+let numGenerator = () => {
+  let randomNumber = Math.floor(Math.random() * frequencies.length)
+  return randomNumber
+}
+numGenerator()
+
+let answer = frequencies[numGenerator()]
+console.log(answer)
 
 const button = document.querySelectorAll('button')
 
 const question = document.querySelector('h1')
-
-let answer = frequencies[randomNumber]
-console.log(answer)
 
 // Oscillator and gain node
 let osc = audioContext.createOscillator()
@@ -49,21 +54,36 @@ mute.addEventListener('click', () => {
 })
 
 // Game play functions
-// Displays the frequencys from the array of frequencies on the buttons
-for (let i = 0; i < button.length; i++) {
-  button[i].innerHTML = `${frequencies[i]}Hz`
+
+let playGame = () => {
+  // Displays the frequencys from the array of frequencies on the buttons
+  for (let i = 0; i < button.length; i++) {
+    button[i].innerHTML = `${frequencies[i]}Hz`
+  }
+
+  // Loops through the buttons and looks at the innerHTML
+  for (let i = 0; i < button.length; i++)
+    button[i].addEventListener('click', () => {
+      if (button[i].innerHTML == `${answer}Hz`) {
+        console.log('YOU ARE CORRECT')
+        numGenerator()
+
+        let answer = frequencies[numGenerator()]
+
+        console.log(answer) // New array number is picked
+
+        // Changes score and mutes the OSC
+        score += potentialScore
+        gain.gain.value = 0
+        question.innerHTML = score
+      } else {
+        console.log(button[i].innerHTML)
+
+        // Decrements potential score every guess
+        potentialScore -= 10
+        question.innerHTML = score
+      }
+    })
 }
 
-// Loops through the buttons and looks at the innerHTML
-for (let i = 0; i < button.length; i++)
-  button[i].addEventListener('click', () => {
-    if (button[i].innerHTML == `${answer}Hz`) {
-      console.log('YOU ARE CORRECT')
-      score += potentialScore
-      console.log(score)
-    } else {
-      console.log(button[i].innerHTML)
-      potentialScore -= 10
-      console.log(potentialScore)
-    }
-  })
+playGame()
