@@ -18,7 +18,7 @@ const level = document.querySelector('h2')
 
 const timer = document.querySelector('.timer')
 
-timer.innerHTML = `:${timerStart}`
+// timer.innerHTML = `:${timerStart}`
 
 level.innerHTML = 'LEVEL 1'
 
@@ -31,6 +31,14 @@ let answer = frequencies[numGenerator()]
 console.log(answer)
 
 // Timer
+let countDownTimer = setInterval(() => {
+  timer.innerHTML = `:${timerStart}`
+  timerStart--
+  if (timerStart === -1) {
+    console.log('TIME UP')
+    clearInterval(countDownTimer)
+  }
+}, 1000)
 
 // Oscillator and gain node
 let osc = audioContext.createOscillator()
