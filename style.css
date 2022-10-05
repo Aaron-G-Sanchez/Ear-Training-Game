@@ -4,9 +4,14 @@ body {
 }
 
 header {
-  height: 300px;
+  height: 500px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 5px;
 }
+
 
 h1{
   margin: 5px;
@@ -16,31 +21,19 @@ h2{
   margin: 5px;
 }
 
-header > div {
-  width: 50px;
-  height: 50px;
-  background-color: aliceblue;
-  padding: 5px;
-  margin: 10px;
-}
-
-.timer {
-  border-radius: 50px;
-}
-
 main {
   margin: 0 auto;
 }
 
 section {
-min-width: 800px;
-max-width: 1100px;
-height: 350px;
-margin: 0 auto;
-display: flex;
-flex-wrap: wrap;
-justify-content: space-between;
-row-gap: 5px;
+  min-width: 800px;
+  max-width: 1100px;
+  height: 350px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  row-gap: 5px;
 }
 
 button {
@@ -56,14 +49,31 @@ button:hover {
   color: aliceblue;
 }
 
+.timer {
+  border-radius: 100px;
+  width: 100px;
+  height: 100px;
+  background-color: lightcoral;
+  color: aliceblue;
+  font-size: 45px;
+  line-height: 100px;
+}
+
+.controls {
+  width: 50px;
+  height: 50px;
+  background-color: aliceblue;
+  padding: 5px;
+  margin: 10px;
+}
 .keyboard {
-min-width: 800px;
-max-width: 1100px;
-margin: 0 auto;
-display: flex;
-flex-wrap: wrap;
-text-align: center;
-justify-content: space-between;
+  min-width: 800px;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+  justify-content: space-between;
 }
 
 .key{

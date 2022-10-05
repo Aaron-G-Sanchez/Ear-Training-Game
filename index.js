@@ -1,22 +1,12 @@
 const audioContext = new (window.AudioContext || window.webkitAudioContext)()
 
 // Game variables
-
 let score = 0
 let turnCounter = 0
-
+let timerStart = 10
 let potentialScore = 100
 
 let frequencies = [250, 440, 500, 1000, 2000]
-
-let numGenerator = () => {
-  let randomNumber = Math.floor(Math.random() * frequencies.length)
-  return randomNumber
-}
-numGenerator()
-
-let answer = frequencies[numGenerator()]
-console.log(answer)
 
 let buttons = document.querySelectorAll('button')
 
@@ -26,7 +16,21 @@ const section = document.querySelector('section')
 
 const level = document.querySelector('h2')
 
+const timer = document.querySelector('.timer')
+
+timer.innerHTML = `:${timerStart}`
+
 level.innerHTML = 'LEVEL 1'
+
+let numGenerator = () => {
+  let randomNumber = Math.floor(Math.random() * frequencies.length)
+  return randomNumber
+}
+numGenerator()
+let answer = frequencies[numGenerator()]
+console.log(answer)
+
+// Timer
 
 // Oscillator and gain node
 let osc = audioContext.createOscillator()
@@ -150,6 +154,7 @@ let buttonClicks = () => {
         }
       } else {
         console.log('OOOooooo try again')
+        // More score mechanics here
       }
     })
 }
