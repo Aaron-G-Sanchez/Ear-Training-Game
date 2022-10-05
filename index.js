@@ -149,14 +149,7 @@ let buttonClicks = () => {
           levelFive()
         }
       } else {
-        // Decrements potential score every guess
-        console.log('Try Again')
-        // potentialScore -= 10
-        // console.log(potentialScore)
-        // scoreBoard.innerHTML = score
-        // if (potentialScore <= 50) {
-        //   updateAnswer()
-        // }
+        console.log('OOOooooo try again')
       }
     })
 }

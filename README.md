@@ -46,8 +46,8 @@ A Trello board was used to keep track of development progress and can be viewed 
 
 - [ ]
 - [ ]
-- [ ]
-- [ ]
+- [x] Pitch game mode that tests pitch recognition
+- [x] Frequency game mode that test frequency identification
 
 ---
 

@@ -45,6 +45,12 @@ const section = document.querySelector('section')
 
 const level = document.querySelector('h2')
 
+// const firstOctave = document.querySelectorAll('.first-octave')
+
+// const secondOctave = document.querySelectorAll('.second-octave')
+
+// secondOctave.style.opacity = '0'
+
 level.innerHTML = 'LEVEL 1'
 
 // Picks at random a frequency from the object
