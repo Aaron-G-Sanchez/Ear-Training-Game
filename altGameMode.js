@@ -37,6 +37,7 @@ let frequencies = {
 const pitch = Object.keys(frequencies)
 const freq = Object.values(frequencies)
 
+// Picks at random a frequency from the object
 let pitchGenerator = () => {
   let randomPitch = freq[Math.floor(Math.random() * freq.length)]
   return randomPitch
@@ -44,26 +45,20 @@ let pitchGenerator = () => {
 
 pitchGenerator()
 
-// let numGenerator = () => {
-//   let randomNumber = Math.floor(Math.random() * Object.keys(frequencies).length)
-//   return randomNumber
-// }
-// numGenerator()
+let answer = pitchGenerator()
 
-// let answer = frequencies
+// Oscillator and gain node
+let osc = audioContext.createOscillator()
+let gain = audioContext.createGain()
 
-// // Oscillator and gain node
-// let osc = audioContext.createOscillator()
-// let gain = audioContext.createGain()
+osc.connect(gain)
+gain.connect(audioContext.destination)
+osc.start()
+gain.gain.value = 0.0
 
-// osc.connect(gain)
-// gain.connect(audioContext.destination)
-// osc.start()
-// gain.gain.value = 0
-
-// // Sets frequency based off a random index from the frequency array
-// let oscFreq = osc.frequency
-// oscFreq.setValueAtTime(answer, audioContext.currentTime)
+// Sets frequency based off a random index from the frequency array
+let oscFreq = osc.frequency
+oscFreq.setValueAtTime(answer, audioContext.currentTime)
 
 // for in loop to iterate throuhg object
 // for (const property in frequencies) {
