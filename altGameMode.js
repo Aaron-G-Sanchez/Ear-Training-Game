@@ -53,9 +53,9 @@ let pitchGenerator = () => {
   return randomPitch
 }
 
-// pitchGenerator()
-
+// Selects random value from object
 let answer = pitchGenerator()
+// let answer = 174.614
 
 // Oscillator and gain node
 let osc = audioContext.createOscillator()
@@ -70,11 +70,14 @@ gain.gain.value = 0.0
 let oscFreq = osc.frequency
 oscFreq.setValueAtTime(answer, audioContext.currentTime)
 
-// for in loop to iterate through object
 let buttonClicks = () => {
   for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', () => {
-      console.log(buttons[i].innerHTML)
+      let buttonFreq = Number(buttons[i].getAttribute('data-value'))
+      console.log(buttonFreq)
+      if (buttonFreq == answer) {
+        console.log('YOU ARE CORRECT')
+      }
     })
   }
 }
