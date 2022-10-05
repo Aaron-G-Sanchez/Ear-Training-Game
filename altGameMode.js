@@ -39,5 +39,3 @@ let numGenerator = () => {
   return randomNumber
 }
 numGenerator()
-
-// console.log(Object.keys(frequencies).length)
