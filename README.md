@@ -53,6 +53,8 @@ A Trello board was used to keep track of development progress and can be viewed 
 
 ## **_Credits_**
 
-[MDN Web Docs ](https://developer.mozilla.org/en-US/docs/Web/API/OscillatorNode)
+[MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/API/OscillatorNode)
+
+[Pitch to Frequency Chart](https://www.liutaiomottola.com/formulae/freqtab.htm)
 
 ---
