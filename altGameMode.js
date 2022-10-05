@@ -37,13 +37,23 @@ let frequencies = {
 const pitch = Object.keys(frequencies)
 const freq = Object.values(frequencies)
 
+let buttons = document.querySelectorAll('button')
+
+const scoreBoard = document.querySelector('h1')
+
+const section = document.querySelector('section')
+
+const level = document.querySelector('h2')
+
+level.innerHTML = 'LEVEL 1'
+
 // Picks at random a frequency from the object
 let pitchGenerator = () => {
   let randomPitch = freq[Math.floor(Math.random() * freq.length)]
   return randomPitch
 }
 
-pitchGenerator()
+// pitchGenerator()
 
 let answer = pitchGenerator()
 
@@ -60,7 +70,17 @@ gain.gain.value = 0.0
 let oscFreq = osc.frequency
 oscFreq.setValueAtTime(answer, audioContext.currentTime)
 
-// for in loop to iterate throuhg object
-// for (const property in frequencies) {
-//   console.log(`${property}: ${frequencies[property]}`)
-// }
+// for in loop to iterate through object
+let buttonClicks = () => {
+  for (let i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener('click', () => {
+      console.log(buttons[i].innerHTML)
+    })
+  }
+}
+
+let playGame = () => {
+  buttonClicks()
+}
+
+playGame()
