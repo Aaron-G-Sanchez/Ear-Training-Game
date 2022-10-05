@@ -98,6 +98,28 @@ let levelThree = () => {
   buttonClicks()
 }
 
+// Creates new div and adds one new freq in the middle of the array
+let levelFour = () => {
+  level.innerHTML = 'LEVEL 4'
+  frequencies.splice(5, 0, 1500)
+  const freqSplice = document.createElement('button')
+  section.appendChild(freqSplice)
+  buttons = document.querySelectorAll('button')
+
+  buttonClicks()
+}
+
+// Creates new div and adds one new frq in the middle of the array
+let levelFive = () => {
+  level.innerHTML = 'LEVEL 5'
+  frequencies.splice(7, 0, 3000)
+  const freqSpliceTwo = document.createElement('button')
+  section.appendChild(freqSpliceTwo)
+  buttons = document.querySelectorAll('button')
+
+  buttonClicks()
+}
+
 // Logic for the button clicks
 let buttonClicks = () => {
   for (let i = 0; i < buttons.length; i++) {
@@ -118,9 +140,13 @@ let buttonClicks = () => {
         // gain.gain.value = 0
         scoreBoard.innerHTML = turnCounter
         if (turnCounter === 5) {
-          levelOne()
+          levelTwo()
         } else if (turnCounter === 12) {
           levelThree()
+        } else if (turnCounter === 20) {
+          levelFour()
+        } else if (turnCounter === 30) {
+          levelFive()
         }
       } else {
         // Decrements potential score every guess
