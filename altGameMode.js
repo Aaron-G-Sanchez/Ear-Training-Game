@@ -70,6 +70,14 @@ gain.gain.value = 0.0
 let oscFreq = osc.frequency
 oscFreq.setValueAtTime(answer, audioContext.currentTime)
 
+// Game Functions
+let updateAnswer = () => {
+  answer = pitchGenerator()
+  console.log(`NEW ANSWER:${answer}`) //logs new answer
+
+  oscFreq.setValueAtTime(answer, audioContext.currentTime)
+}
+
 let buttonClicks = () => {
   for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', () => {
@@ -77,6 +85,7 @@ let buttonClicks = () => {
       console.log(buttonFreq)
       if (buttonFreq == answer) {
         console.log('YOU ARE CORRECT')
+        updateAnswer()
       }
     })
   }
