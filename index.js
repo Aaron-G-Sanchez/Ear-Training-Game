@@ -8,6 +8,8 @@ let timerStart = 10
 
 let timerOnStart = 05
 
+let unmuteTimer = 03
+
 let frequencies = [250, 440, 500, 1000, 2000]
 
 let buttons = document.querySelectorAll('button')
@@ -33,20 +35,29 @@ let answer = frequencies[numGenerator()]
 console.log(answer)
 
 // Timer
-const gameClock = () => {
-  let countDownTimer = setInterval(() => {
-    // timer.innerHTML = `:${timerStart}`
-    timerStart--
-    timerStart <= 9
-    timer.innerHTML = `:0${timerStart}`
-    if (timerStart === 0) {
-      console.log('time is up!')
-      clearInterval(countDownTimer)
+// const gameClock = () => {
+//   let countDownTimer = setInterval(() => {
+//     // timer.innerHTML = `:${timerStart}`
+//     timerStart--
+//     timerStart <= 9
+//     timer.innerHTML = `:0${timerStart}`
+//     if (timerStart === 0) {
+//       console.log('time is up!')
+//       clearInterval(countDownTimer)
+//     }
+//   }, 1000)
+// }
+
+// Audio mute
+const unmute = () => {
+  let unmuteInterval = setInterval(() => {
+    unmuteTimer--
+    if (unmuteTimer === 0) {
+      clearInterval(unmuteInterval)
+      gain.gain.value = 0.03
     }
   }, 1000)
 }
-
-// gameClock()
 
 // Oscillator and gain node
 let osc = audioContext.createOscillator()
@@ -110,7 +121,9 @@ let updateAnswer = () => {
 
   oscFreq.setValueAtTime(answer, audioContext.currentTime)
 
-  // Lowers the volume after delay when anser is correct
+  // After Delay plays audio again
+  unmuteTimer = 03
+  unmute()
 }
 
 // Levels up game
@@ -164,6 +177,7 @@ let levelFive = () => {
 let gameOver = () => {
   level.innerHTML = 'THANKS FOR PLAYING'
 }
+
 // Logic for the button clicks
 let buttonClicks = () => {
   for (let i = 0; i < buttons.length; i++) {
@@ -176,12 +190,11 @@ let buttonClicks = () => {
     buttons[i].addEventListener('click', () => {
       if (buttons[i].innerHTML == `${answer}Hz`) {
         console.log('YOU ARE CORRECT')
-
+        gain.gain.value = 0
         turnCounter++
         updateAnswer()
 
         // Changes score and mutes the OSC
-        // gain.gain.value = 0
         // scoreBoard.innerHTML = turnCounter
         if (turnCounter === 5) {
           levelTwo()
@@ -196,7 +209,6 @@ let buttonClicks = () => {
         }
       } else {
         console.log('OOOooooo try again')
-        // More score mechanics here
       }
     })
 }
