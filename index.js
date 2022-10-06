@@ -6,6 +6,8 @@ let turnCounter = 0
 
 let timerStart = 10
 
+let timerOnStart = 05
+
 let frequencies = [250, 440, 500, 1000, 2000]
 
 let buttons = document.querySelectorAll('button')
@@ -18,7 +20,7 @@ const level = document.querySelector('#level')
 
 const timer = document.querySelector('.timer')
 
-timer.innerHTML = `:${timerStart}`
+timer.innerHTML = `Press Start`
 
 level.innerHTML = 'LEVEL 1'
 
@@ -31,18 +33,18 @@ let answer = frequencies[numGenerator()]
 console.log(answer)
 
 // Timer
-// const gameClock = () => {
-//   let countDownTimer = setInterval(() => {
-//     timer.innerHTML = `:${timerStart}`
-//     timerStart--
-//     timerStart <= 9
-//     timer.innerHTML = `:0${timerStart}`
-//     if (timerStart === 0) {
-//       console.log('time is up!')
-//       clearInterval(countDownTimer)
-//     }
-//   }, 1000)
-// }
+const gameClock = () => {
+  let countDownTimer = setInterval(() => {
+    // timer.innerHTML = `:${timerStart}`
+    timerStart--
+    timerStart <= 9
+    timer.innerHTML = `:0${timerStart}`
+    if (timerStart === 0) {
+      console.log('time is up!')
+      clearInterval(countDownTimer)
+    }
+  }, 1000)
+}
 
 // gameClock()
 
@@ -52,9 +54,9 @@ let gain = audioContext.createGain()
 
 osc.connect(gain)
 gain.connect(audioContext.destination)
+osc.start()
 gain.gain.value = 0
 
-osc.start()
 // Sets frequency based off a random index from the frequency array
 let oscFreq = osc.frequency
 oscFreq.setValueAtTime(answer, audioContext.currentTime)
@@ -71,9 +73,24 @@ const start = document.querySelector('#start')
 const play = document.querySelector('#play')
 const mute = document.querySelector('#pause')
 
-start.addEventListener('click', () => {
-  audioContext.resume()
-})
+start.addEventListener(
+  'click',
+  () => {
+    audioContext.resume()
+    let countDownTimer = setInterval(() => {
+      timerOnStart--
+      timer.innerHTML = `:${timerOnStart}`
+      if (timerOnStart === 0) {
+        timerOnStart = 0
+        timer.innerHTML = `:${timerOnStart}`
+        gain.gain.value = 0.03
+        console.log('Here is the first freq')
+        clearInterval(countDownTimer)
+      }
+    }, 1000)
+  },
+  { once: true }
+)
 
 play.addEventListener('click', () => {
   gain.gain.value = 0.03
@@ -165,7 +182,7 @@ let buttonClicks = () => {
 
         // Changes score and mutes the OSC
         // gain.gain.value = 0
-        scoreBoard.innerHTML = turnCounter
+        // scoreBoard.innerHTML = turnCounter
         if (turnCounter === 5) {
           levelTwo()
         } else if (turnCounter === 12) {

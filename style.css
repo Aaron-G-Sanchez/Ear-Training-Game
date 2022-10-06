@@ -81,7 +81,6 @@ button:hover {
   background-color: lightcoral;
   color: aliceblue;
   font-size: 45px;
-  /* line-height: 100px; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -110,8 +109,8 @@ button:hover {
 }
 
 .timer {
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   border-radius: 100px;
   background-color: lightcoral;
   color: aliceblue;
