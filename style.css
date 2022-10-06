@@ -1,10 +1,26 @@
 body {
   background-color: lightslategray;
   font-family: helvetica;
+  padding: 0;
+  margin: 0;
 }
 
+.hero {
+  height: 1000px;
+  max-width: 1920px;
+  min-width: 800px;
+  background-color: #1C1D21;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+
 header {
-  height: 500px;
+  height: 400px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -21,19 +37,28 @@ h2{
   margin: 5px;
 }
 
+a {
+text-decoration: none;
+color: lightcoral;
+}
+
+a:hover{
+  color: aliceblue;
+}
+
 main {
   margin: 0 auto;
 }
 
 section {
-  min-width: 800px;
-  max-width: 1100px;
+  min-width: 600px;
+  max-width: 800px;
   height: 350px;
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  row-gap: 5px;
+  row-gap: 1px;
 }
 
 button {
@@ -45,19 +70,36 @@ button {
 }
 
 button:hover {
-  background-color: midnightblue;
+  background-color: lightcoral;
   color: aliceblue;
 }
 
-.timer {
-  border-radius: 100px;
-  width: 100px;
-  height: 100px;
+.title {
+  border-radius: 600px;
+  width: 600px;
+  height: 600px;
   background-color: lightcoral;
   color: aliceblue;
   font-size: 45px;
-  line-height: 100px;
+  /* line-height: 100px; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
 }
+
+.controls-container {
+  width: 250px;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  
+}
+
 
 .controls {
   width: 50px;
@@ -66,6 +108,19 @@ button:hover {
   padding: 5px;
   margin: 10px;
 }
+
+.timer {
+  width: 100px;
+  height: 100px;
+  border-radius: 100px;
+  background-color: lightcoral;
+  color: aliceblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+}
+
 .keyboard {
   min-width: 800px;
   max-width: 1100px;
@@ -87,6 +142,7 @@ button:hover {
 .key:hover {
   opacity: .8;
 }
+
 .black {
   background-color: black;
   color: aliceblue;

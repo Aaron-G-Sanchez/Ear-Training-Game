@@ -1,20 +1,20 @@
 const audioContext = new (window.AudioContext || window.webkitAudioContext)()
 
 // Game variables
-let score = 0
+
 let turnCounter = 0
+
 let timerStart = 10
-let potentialScore = 100
 
 let frequencies = [250, 440, 500, 1000, 2000]
 
 let buttons = document.querySelectorAll('button')
 
-const scoreBoard = document.querySelector('h1')
+const scoreBoard = document.querySelector('#score')
 
 const section = document.querySelector('section')
 
-const level = document.querySelector('h2')
+const level = document.querySelector('#level')
 
 const timer = document.querySelector('.timer')
 
@@ -31,20 +31,20 @@ let answer = frequencies[numGenerator()]
 console.log(answer)
 
 // Timer
-const gameClock = () => {
-  let countDownTimer = setInterval(() => {
-    timer.innerHTML = `:${timerStart}`
-    timerStart--
-    timerStart <= 9
-    timer.innerHTML = `:0${timerStart}`
-    if (timerStart === 0) {
-      console.log('time is up!')
-      clearInterval(countDownTimer)
-    }
-  }, 1000)
-}
+// const gameClock = () => {
+//   let countDownTimer = setInterval(() => {
+//     timer.innerHTML = `:${timerStart}`
+//     timerStart--
+//     timerStart <= 9
+//     timer.innerHTML = `:0${timerStart}`
+//     if (timerStart === 0) {
+//       console.log('time is up!')
+//       clearInterval(countDownTimer)
+//     }
+//   }, 1000)
+// }
 
-gameClock()
+// gameClock()
 
 // Oscillator and gain node
 let osc = audioContext.createOscillator()
@@ -52,9 +52,9 @@ let gain = audioContext.createGain()
 
 osc.connect(gain)
 gain.connect(audioContext.destination)
-osc.start()
 gain.gain.value = 0
 
+osc.start()
 // Sets frequency based off a random index from the frequency array
 let oscFreq = osc.frequency
 oscFreq.setValueAtTime(answer, audioContext.currentTime)
@@ -67,11 +67,17 @@ oscFreq.setValueAtTime(answer, audioContext.currentTime)
 //   osc.stop()
 // }, 2000)
 
+const start = document.querySelector('#start')
 const play = document.querySelector('#play')
 const mute = document.querySelector('#pause')
 
+start.addEventListener('click', () => {
+  audioContext.resume()
+})
+
 play.addEventListener('click', () => {
   gain.gain.value = 0.03
+  audioContext.resume()
 })
 
 mute.addEventListener('click', () => {
@@ -82,17 +88,17 @@ mute.addEventListener('click', () => {
 // Updates the answer as well as the OSC frequncy when answer is correctly guessed
 let updateAnswer = () => {
   numGenerator()
-  potentialScore = 100
   answer = frequencies[numGenerator()]
   console.log(`NEW ANSWER:${answer}`) //logs new answer
 
   oscFreq.setValueAtTime(answer, audioContext.currentTime)
+
+  // Lowers the volume after delay when anser is correct
 }
 
 // Levels up game
 // creates one div and add one freq to the array
 let levelTwo = () => {
-  potentialScore = 100
   level.innerHTML = 'LEVEL 2'
   frequencies.push(4000)
   const freqPush = document.createElement('button')
@@ -138,6 +144,9 @@ let levelFive = () => {
   buttonClicks()
 }
 
+let gameOver = () => {
+  level.innerHTML = 'THANKS FOR PLAYING'
+}
 // Logic for the button clicks
 let buttonClicks = () => {
   for (let i = 0; i < buttons.length; i++) {
@@ -150,7 +159,7 @@ let buttonClicks = () => {
     buttons[i].addEventListener('click', () => {
       if (buttons[i].innerHTML == `${answer}Hz`) {
         console.log('YOU ARE CORRECT')
-        // score += potentialScore
+
         turnCounter++
         updateAnswer()
 
@@ -163,8 +172,10 @@ let buttonClicks = () => {
           levelThree()
         } else if (turnCounter === 20) {
           levelFour()
-        } else if (turnCounter === 30) {
+        } else if (turnCounter === 35) {
           levelFive()
+        } else if (turnCounter === 50) {
+          gameOver()
         }
       } else {
         console.log('OOOooooo try again')
