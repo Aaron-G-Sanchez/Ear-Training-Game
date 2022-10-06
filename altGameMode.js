@@ -2,10 +2,7 @@ const audioContext = new (window.AudioContext || window.webkitAudioContext)()
 
 // Game Variables
 
-let score = 0
 let turnCounter = 0
-
-let potentialScore = 100
 
 let frequencies = {
   C3: 130.813,
@@ -34,6 +31,16 @@ let frequencies = {
   B4: 493.883
 }
 
+let octaveOne = [
+  130.813, 138.591, 146.832, 155.563, 164.814, 174.614, 184.997, 195.998,
+  207.652, 220, 233.082, 246.942
+]
+
+let octaveTwo = [
+  261.626, 277.183, 293.665, 311.127, 329.628, 349.228, 369.994, 391.995,
+  415.305, 440, 466.164, 493.883
+]
+
 const pitch = Object.keys(frequencies)
 const freq = Object.values(frequencies)
 
@@ -45,11 +52,13 @@ const section = document.querySelector('section')
 
 const level = document.querySelector('h2')
 
-// const firstOctave = document.querySelectorAll('.first-octave')
+const timer = document.querySelector('.timer')
 
-// const secondOctave = document.querySelectorAll('.second-octave')
+const firstOctave = document.querySelectorAll('.first-octave')
 
-// secondOctave.style.opacity = '0'
+const secondOctave = document.querySelectorAll('.second-octave')
+
+timer.innerHTML = `Press Start`
 
 level.innerHTML = 'LEVEL 1'
 
@@ -76,7 +85,63 @@ gain.gain.value = 0.0
 let oscFreq = osc.frequency
 oscFreq.setValueAtTime(answer, audioContext.currentTime)
 
+// Play pause buttons
+const start = document.querySelector('#start')
+const play = document.querySelector('#play')
+const mute = document.querySelector('#pause')
+
+start.addEventListener(
+  'click',
+  () => {
+    audioContext.resume()
+    let countDownTimer = setInterval(() => {
+      timerOnStart--
+      timer.innerHTML = `:${timerOnStart}`
+      if (timerOnStart === 0) {
+        timerOnStart = 0
+        timer.innerHTML = `:${timerOnStart}`
+        gain.gain.value = 0.03
+        console.log('Here is the first freq')
+        clearInterval(countDownTimer)
+      }
+    }, 1000)
+  },
+  { once: true }
+)
+
+play.addEventListener('click', () => {
+  gain.gain.value = 0.03
+  audioContext.resume()
+})
+
+mute.addEventListener('click', () => {
+  gain.gain.value = 0
+})
+
 // Game Functions
+const hideSecondOctave = () => {
+  for (let i = 0; i < buttons.length; i++) {
+    secondOctave[i].style.opacity = 0
+  }
+}
+
+const hideFirstOctave = () => {
+  for (let i = 0; i < buttons.length; i++) {
+    firstOctave[i].style.opacity = 0
+  }
+}
+const showSecondOctave = () => {
+  for (let i = 0; i < buttons.length; i++) {
+    secondOctave[i].style.opacity = 1
+  }
+}
+
+const showFirstOctave = () => {
+  for (let i = 0; i < buttons.length; i++) {
+    firstOctave[i].style.opacity = 1
+  }
+}
+
 let updateAnswer = () => {
   answer = pitchGenerator()
   console.log(`NEW ANSWER:${answer}`) //logs new answer
