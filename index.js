@@ -178,10 +178,14 @@ let levelFive = () => {
 
 let gameOver = () => {
   // level.innerHTML = 'THANKS FOR PLAYING'
-  let overlay = document.createElement('p')
+  let overlay = document.createElement('div')
   overlay.setAttribute('class', 'game-over')
-  overlay.innerHTML = 'THANKS <br/> FOR PLAYING'
+  overlay.innerHTML = `<p>THANKS <br/> FOR <br/> PLAYING</p><button id="reset">PLAY AGAIN?</button>`
   header.prepend(overlay)
+  let resetGame = document.querySelector('#reset')
+  resetGame.addEventListener('click', () => {
+    location.reload()
+  })
 }
 
 // Logic for the button clicks

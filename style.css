@@ -158,10 +158,29 @@ button:hover {
 
 .game-over {
   position: absolute;
-  margin: 0;
+  /* margin: 0; */
+  /* padding: 0 200px; */
   z-index: 69;
   color: aliceblue;
-  font-size: 255px;
-  background-color: rgba(240, 128, 128, .7);
+  font-size: 200px;
+  background-color: rgba(240, 128, 128, .8);
+  width: 100%;
+}
 
+.game-over > p {
+  margin: 0;
+}
+
+#reset {
+width: 150px;
+height: 150px;
+border-radius: 100px;
+text-align: center;
+background-color: rgb(240, 128, 128, .0);
+color :aliceblue;
+}
+
+#reset:hover {
+  background-color: aliceblue;
+  color: lightcoral;
 }

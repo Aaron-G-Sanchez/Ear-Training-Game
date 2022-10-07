@@ -43,6 +43,8 @@ const firstOctave = document.querySelectorAll('.first-octave')
 
 const secondOctave = document.querySelectorAll('.second-octave')
 
+const header = document.querySelector('header')
+
 timer.innerHTML = `Press Start`
 
 level.innerHTML = 'LEVEL 1'
@@ -217,6 +219,19 @@ let levelFiveUpdateAnswer = () => {
   unmute()
 }
 
+let gameOver = () => {
+  // level.innerHTML = 'THANKS FOR PLAYING'
+  let overlay = document.createElement('div')
+  overlay.setAttribute('class', 'game-over')
+  overlay.innerHTML = `<p>THANKS <br/> FOR <br/> PLAYING</p><button id="reset">PLAY AGAIN?</button>`
+  header.prepend(overlay)
+  overlay.style.height = '100%'
+  let resetGame = document.querySelector('#reset')
+  resetGame.addEventListener('click', () => {
+    location.reload()
+  })
+}
+
 // Loops through the buttons looking for the correct answer
 let buttonClicks = () => {
   for (let i = 0; i < buttons.length; i++) {
@@ -244,6 +259,8 @@ let buttonClicks = () => {
           levelFour()
         } else if (turnCounter === 25) {
           levelFive()
+        } else if (turnCounter === 40) {
+          gameOver()
         }
       }
     })
