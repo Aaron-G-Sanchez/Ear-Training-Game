@@ -70,7 +70,9 @@ button {
   height: 150px;
   border: none;
   color: black;
+  background-color: aliceblue;
   font-size: 25px;
+  
 }
 
 button:hover {
