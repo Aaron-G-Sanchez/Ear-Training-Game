@@ -19,7 +19,7 @@ This is an ear training game target towards audio engineers and music studnts lo
 - HTML
 - CSS
 - Javascript
-  -Web Audio API
+  - Web Audio API
 
 ---
 
