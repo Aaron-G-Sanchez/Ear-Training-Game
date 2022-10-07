@@ -8,32 +8,32 @@ let timerOnStart = 5
 
 let unmuteTimer = 03
 
-let frequencies = {
-  C3: 130.813,
-  Cs3: 138.591,
-  D3: 146.832,
-  Ds3: 155.563,
-  E3: 164.814,
-  F3: 174.614,
-  Fs3: 184.997,
-  G3: 195.998,
-  Gs3: 207.652,
-  A3: 220,
-  As3: 233.082,
-  B3: 246.942,
-  C4: 261.626,
-  Cs4: 277.183,
-  D4: 293.665,
-  Ds4: 311.127,
-  E4: 329.628,
-  F4: 349.228,
-  Fs4: 369.994,
-  G4: 391.995,
-  Gs4: 415.305,
-  A4: 440,
-  As4: 466.164,
-  B4: 493.883
-}
+// let frequencies = {
+//   C3: 130.813,
+//   Cs3: 138.591,
+//   D3: 146.832,
+//   Ds3: 155.563,
+//   E3: 164.814,
+//   F3: 174.614,
+//   Fs3: 184.997,
+//   G3: 195.998,
+//   Gs3: 207.652,
+//   A3: 220,
+//   As3: 233.082,
+//   B3: 246.942,
+//   C4: 261.626,
+//   Cs4: 277.183,
+//   D4: 293.665,
+//   Ds4: 311.127,
+//   E4: 329.628,
+//   F4: 349.228,
+//   Fs4: 369.994,
+//   G4: 391.995,
+//   Gs4: 415.305,
+//   A4: 440,
+//   As4: 466.164,
+//   B4: 493.883
+// }
 
 let octaveOne = [
   130.813, 138.591, 146.832, 155.563, 164.814, 174.614, 184.997, 195.998,
@@ -47,8 +47,8 @@ let octaveTwo = [
 
 let bothOctaves = [...octaveOne, ...octaveTwo]
 
-const pitch = Object.keys(frequencies)
-const freq = Object.values(frequencies)
+// const pitch = Object.keys(frequencies)
+// const freq = Object.values(frequencies)
 
 let buttons = document.querySelectorAll('button')
 
@@ -69,13 +69,30 @@ timer.innerHTML = `Press Start`
 level.innerHTML = 'LEVEL 1'
 
 // Picks at random a frequency from the object
-let pitchGenerator = () => {
-  let randomPitch = freq[Math.floor(Math.random() * freq.length)]
-  return randomPitch
+// let pitchGenerator = () => {
+//   let randomPitch = freq[Math.floor(Math.random() * freq.length)]
+//   return randomPitch
+// }
+
+let octaveOneFreqGen = () => {
+  let randomNumber = Math.floor(Math.random() * octaveOne.length)
+  return randomNumber
 }
 
+let octaveTwoFreqGen = () => {
+  let randomNumber = Math.floor(Math.random() * octaveTwo.length)
+  return randomNumber
+}
+
+let bothOctaveFreqGen = () => {
+  let randomNumber = Math.floor(Math.random() * bothOctaves.length)
+  return randomNumber
+}
 // Selects random value from object
-let answer = pitchGenerator()
+// let answer = pitchGenerator()
+
+let answer = octaveOne[octaveOneFreqGen()]
+console.log(answer)
 // let answer = 174.614
 
 // Oscillator and gain node
@@ -148,13 +165,16 @@ const showFirstOctave = () => {
   }
 }
 
+// Updates answer as well as OSC frequency
 let updateAnswer = () => {
-  answer = pitchGenerator()
+  octaveOneFreqGen()
+  answer = octaveOne[octaveOneFreqGen()]
   console.log(`NEW ANSWER:${answer}`) //logs new answer
 
   oscFreq.setValueAtTime(answer, audioContext.currentTime)
 }
 
+// Loops through the buttons looking for the correct answer
 let buttonClicks = () => {
   for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', () => {
