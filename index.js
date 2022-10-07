@@ -95,7 +95,7 @@ start.addEventListener(
       timer.innerHTML = `:${timerOnStart}`
       if (timerOnStart === 0) {
         timerOnStart = 0
-        timer.innerHTML = `:${timerOnStart}`
+        timer.innerHTML = ``
         gain.gain.value = 0.03
         console.log('Here is the first freq')
         clearInterval(countDownTimer)

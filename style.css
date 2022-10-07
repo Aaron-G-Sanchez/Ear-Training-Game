@@ -28,6 +28,10 @@ header {
   padding-bottom: 5px;
 }
 
+img{
+  width: 400px;
+  height: 400px;
+}
 
 h1{
   margin: 5px;
@@ -74,7 +78,13 @@ button:hover {
   color: aliceblue;
 }
 
-.title {
+.title{
+  color: aliceblue;
+  margin: 0 0 -40px 5px;
+  z-index: 69;
+}
+
+.sphere {
   border-radius: 600px;
   width: 600px;
   height: 600px;

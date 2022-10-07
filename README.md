@@ -26,26 +26,28 @@ This is an ear training game target towards audio engineers and music studnts lo
 
 Launch the webpage and scroll to the start screen where you can pick what game mode you want to play [here]().
 
+Press the start button to start the game! Once the countdown begins, you will here a frequency that you need to try and identify.
+
 A Trello board was used to keep track of development progress and can be viewed [here](https://trello.com/invite/b/44bmat3h/4f33f2bfa3a9ecf55451d23361ee4830/pitch-and-frequency-ear-training-game).
 
 ---
 
 ## **_Screenshots_**
 
-####
+#### Title Screen
 
-![]()
+![Title Screen](/Photos/TITLE_SCREEN.png)
 
-####
+#### Frequency Game Mode
 
-![]()
+![Frequency Game Mode](/Photos/FREQ_GAME_MODE.png)
 
 ---
 
 ## **_Task List_**
 
-- [ ]
-- [ ]
+- [ ] Scoreboard implementation so user can track their scores
+- [ ] Make piano look more like a piano
 - [x] Pitch game mode that tests pitch recognition
 - [x] Frequency game mode that test frequency identification
 
@@ -53,8 +55,10 @@ A Trello board was used to keep track of development progress and can be viewed 
 
 ## **_Credits_**
 
-[MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/API/OscillatorNode)
+Web Audio API documentation - [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/API/OscillatorNode)
 
-[Pitch to Frequency Chart](https://www.liutaiomottola.com/formulae/freqtab.htm)
+Pitch to frequency conversion chart - [Frequency Chart](https://www.liutaiomottola.com/formulae/freqtab.htm)
+
+Waveform SVG - [SVG Creator](https://thenounproject.com/icon/waveform-220352/)
 
 ---
