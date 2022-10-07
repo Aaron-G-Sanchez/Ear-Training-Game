@@ -1,4 +1,4 @@
-# Ear Training Pitch/ Frequency Game
+# SINES EAR TRAING GAME
 
 # Date: 10/2/22
 
