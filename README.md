@@ -19,12 +19,14 @@ This is an ear training game target towards audio engineers and music studnts lo
 - HTML
 - CSS
 - Javascript
+  -Web Audio API
 
 ---
 
 ## **_Getting Started_**
 
-Launch the site and press the start button to begin the game! Once the countdown begins, you will hear a frequency that you need to try and identify. Once you answer it correctly, you will get a new frequency to indenitfy and continue until you reach the end.
+Launch the site and press the start button to begin the game [here](https://astonishing-summer.surge.sh/index.html)!
+Once the countdown begins, you will hear a frequency that you need to try and identify. Once you answer it correctly, you will get a new frequency to indenitfy and continue until you reach the end.
 
 A Trello board was used to keep track of development progress and can be viewed [here](https://trello.com/invite/b/44bmat3h/4f33f2bfa3a9ecf55451d23361ee4830/pitch-and-frequency-ear-training-game).
 
