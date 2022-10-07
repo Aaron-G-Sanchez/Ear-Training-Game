@@ -22,6 +22,8 @@ const level = document.querySelector('#level')
 
 const timer = document.querySelector('.timer')
 
+const header = document.querySelector('header')
+
 timer.innerHTML = `Press Start`
 
 level.innerHTML = 'LEVEL 1'
@@ -175,7 +177,11 @@ let levelFive = () => {
 }
 
 let gameOver = () => {
-  level.innerHTML = 'THANKS FOR PLAYING'
+  // level.innerHTML = 'THANKS FOR PLAYING'
+  let overlay = document.createElement('p')
+  overlay.setAttribute('class', 'game-over')
+  overlay.innerHTML = 'THANKS <br/> FOR PLAYING'
+  header.prepend(overlay)
 }
 
 // Logic for the button clicks
