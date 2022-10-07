@@ -42,6 +42,14 @@ A Trello board was used to keep track of development progress and can be viewed 
 
 ![Frequency Game Mode](/Photos/FREQ_GAME_MODE.png)
 
+#### Pitch Game Mode
+
+![Pitch Game Mode](/Photos/PITCH_GAME_MODE.png)
+
+#### Game Over Screen
+
+![Game Over Screen](/Photos/GAME_OVER_SCREEN.png)
+
 ---
 
 ## **_Task List_**
