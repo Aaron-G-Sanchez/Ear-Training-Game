@@ -57,6 +57,7 @@ A Trello board was used to keep track of development progress and can be viewed 
 - [ ] Randomize the frequencies that get added through out the levels
 - [ ] Scoreboard implementation so user can track their scores
 - [ ] Make piano look more like a piano
+- [ ] Volume knob
 - [x] Pitch game mode that tests pitch recognition
 - [x] Frequency game mode that tests frequency identification
 
