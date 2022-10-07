@@ -4,7 +4,7 @@ const audioContext = new (window.AudioContext || window.webkitAudioContext)()
 
 let turnCounter = 0
 
-let timerOnStart = 5
+let timerOnStart = 6
 
 let unmuteTimer = 03
 
@@ -18,20 +18,15 @@ let octaveTwo = [
   415.305, 440, 466.164, 493.883
 ]
 
-// let bothOctaves = [...octaveOne, ...octaveTwo]
+let bothOctaves = [...octaveOne, ...octaveTwo]
 
-let bothOctaves = [
-  130.813, 138.591, 146.832, 155.563, 164.814, 174.614, 184.997, 195.998,
-  207.652, 220, 233.082, 246.942, 261.626, 277.183, 293.665, 311.127, 329.628,
-  349.228, 369.994, 391.995, 415.305, 440, 466.164, 493.883
-]
-
-// const pitch = Object.keys(frequencies)
-// const freq = Object.values(frequencies)
+// let bothOctaves = [
+//   130.813, 138.591, 146.832, 155.563, 164.814, 174.614, 184.997, 195.998,
+//   207.652, 220, 233.082, 246.942, 261.626, 277.183, 293.665, 311.127, 329.628,
+//   349.228, 369.994, 391.995, 415.305, 440, 466.164, 493.883
+// ]
 
 let buttons = document.querySelectorAll('button')
-
-const scoreBoard = document.querySelector('h1')
 
 const section = document.querySelector('section')
 
@@ -66,7 +61,6 @@ let bothOctaveFreqGen = () => {
 }
 // Selects random index from array
 let answer = octaveOne[octaveOneFreqGen()]
-console.log(answer)
 
 // Audio mute
 const unmute = () => {
@@ -106,9 +100,9 @@ start.addEventListener(
       timer.innerHTML = `:${timerOnStart}`
       if (timerOnStart === 0) {
         timerOnStart = 0
-        timer.innerHTML = `:${timerOnStart}`
+        timer.innerHTML = ``
         gain.gain.value = 0.03
-        console.log('Here is the first freq')
+
         clearInterval(countDownTimer)
       }
     }, 1000)
@@ -154,14 +148,12 @@ hideSecondOctave()
 
 const levelTwo = () => {
   level.innerHTML = 'LEVEL 2'
-  console.log('im level 2')
 
   updateAnswer()
 }
 
 const levelThree = () => {
   level.innerHTML = 'LEVEL 3'
-  console.log('im level 3')
   hideFirstOctave()
   showSecondOctave()
 
@@ -170,14 +162,12 @@ const levelThree = () => {
 
 const levelFour = () => {
   level.innerHTML = 'LEVEL 4'
-  console.log('im level 4')
 
   levelThreeUpdateAnswer()
 }
 
 const levelFive = () => {
   level.innerHTML = 'LEVEL 5'
-  console.log('im level 5')
   showFirstOctave()
 
   levelFiveUpdateAnswer()
@@ -186,7 +176,6 @@ const levelFive = () => {
 let updateAnswer = () => {
   octaveOneFreqGen()
   answer = octaveOne[octaveOneFreqGen()]
-  console.log(`NEW ANSWER:${answer}`) //logs new answer
 
   oscFreq.setValueAtTime(answer, audioContext.currentTime)
 
@@ -198,7 +187,6 @@ let updateAnswer = () => {
 let levelThreeUpdateAnswer = () => {
   octaveTwoFreqGen()
   answer = octaveTwo[octaveTwoFreqGen()]
-  console.log(`NEW ANSWER:${answer}`) //logs new answer
 
   oscFreq.setValueAtTime(answer, audioContext.currentTime)
 
@@ -210,17 +198,20 @@ let levelThreeUpdateAnswer = () => {
 let levelFiveUpdateAnswer = () => {
   bothOctaveFreqGen()
   answer = bothOctaves[bothOctaveFreqGen()]
-  console.log(`NEW ANSWER:${answer}`) //logs new answer
 
   oscFreq.setValueAtTime(answer, audioContext.currentTime)
 
   // After delay plays audio again
-  unmuteTimer = 03
-  unmute()
+  if (turnCounter < 39) {
+    unmuteTimer = 03
+    unmute()
+  } else {
+    gain.gain.value = 0
+  }
 }
 
 let gameOver = () => {
-  // level.innerHTML = 'THANKS FOR PLAYING'
+  gain.gain.value = 0
   let overlay = document.createElement('div')
   overlay.setAttribute('class', 'game-over')
   overlay.innerHTML = `<p>THANKS <br/> FOR <br/> PLAYING</p><button id="reset">PLAY AGAIN?</button>`
@@ -237,9 +228,8 @@ let buttonClicks = () => {
   for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', () => {
       let buttonFreq = Number(buttons[i].getAttribute('data-value'))
-      console.log(buttonFreq)
+
       if (buttonFreq == answer) {
-        console.log('YOU ARE CORRECT')
         gain.gain.value = 0
         if (turnCounter <= 11) {
           updateAnswer()

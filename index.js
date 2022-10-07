@@ -4,17 +4,13 @@ const audioContext = new (window.AudioContext || window.webkitAudioContext)()
 
 let turnCounter = 0
 
-let timerStart = 10
-
-let timerOnStart = 05
+let timerOnStart = 06
 
 let unmuteTimer = 03
 
 let frequencies = [250, 440, 500, 1000, 2000]
 
 let buttons = document.querySelectorAll('button')
-
-const scoreBoard = document.querySelector('#score')
 
 const section = document.querySelector('section')
 
@@ -34,21 +30,6 @@ let numGenerator = () => {
 }
 numGenerator()
 let answer = frequencies[numGenerator()]
-console.log(answer)
-
-// Timer
-// const gameClock = () => {
-//   let countDownTimer = setInterval(() => {
-//     // timer.innerHTML = `:${timerStart}`
-//     timerStart--
-//     timerStart <= 9
-//     timer.innerHTML = `:0${timerStart}`
-//     if (timerStart === 0) {
-//       console.log('time is up!')
-//       clearInterval(countDownTimer)
-//     }
-//   }, 1000)
-// }
 
 // Audio mute
 const unmute = () => {
@@ -74,14 +55,7 @@ gain.gain.value = 0
 let oscFreq = osc.frequency
 oscFreq.setValueAtTime(answer, audioContext.currentTime)
 
-// Play/Pause/Volume buttons -- Currently WORKS but only lets you start and stop ONCE
-// Sets OSC to start and stop after duration
-// osc.start()
-
-// setTimeout(() => {
-//   osc.stop()
-// }, 2000)
-
+// Play/Pause/Volume buttons
 const start = document.querySelector('#start')
 const play = document.querySelector('#play')
 const mute = document.querySelector('#pause')
@@ -97,7 +71,6 @@ start.addEventListener(
         timerOnStart = 0
         timer.innerHTML = ``
         gain.gain.value = 0.03
-        console.log('Here is the first freq')
         clearInterval(countDownTimer)
       }
     }, 1000)
@@ -119,13 +92,16 @@ mute.addEventListener('click', () => {
 let updateAnswer = () => {
   numGenerator()
   answer = frequencies[numGenerator()]
-  console.log(`NEW ANSWER:${answer}`) //logs new answer
 
   oscFreq.setValueAtTime(answer, audioContext.currentTime)
 
   // After Delay plays audio again
-  unmuteTimer = 03
-  unmute()
+  if (turnCounter < 49) {
+    unmuteTimer = 03
+    unmute()
+  } else {
+    gain.gain.value = 0
+  }
 }
 
 // Levels up game
@@ -178,6 +154,7 @@ let levelFive = () => {
 
 let gameOver = () => {
   // level.innerHTML = 'THANKS FOR PLAYING'
+  gain.gain.value = 0
   let overlay = document.createElement('div')
   overlay.setAttribute('class', 'game-over')
   overlay.innerHTML = `<p>THANKS <br/> FOR <br/> PLAYING</p><button id="reset">PLAY AGAIN?</button>`
@@ -199,13 +176,11 @@ let buttonClicks = () => {
     // Displays the frequencys from the array of frequencies on the buttons
     buttons[i].addEventListener('click', () => {
       if (buttons[i].innerHTML == `${answer}Hz`) {
-        console.log('YOU ARE CORRECT')
         gain.gain.value = 0
-        turnCounter++
         updateAnswer()
+        turnCounter++
 
-        // Changes score and mutes the OSC
-        // scoreBoard.innerHTML = turnCounter
+        // Changes level
         if (turnCounter === 5) {
           levelTwo()
         } else if (turnCounter === 12) {
@@ -217,8 +192,6 @@ let buttonClicks = () => {
         } else if (turnCounter === 50) {
           gameOver()
         }
-      } else {
-        console.log('OOOooooo try again')
       }
     })
 }
